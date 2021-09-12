@@ -7,7 +7,7 @@ root = Tk()
 
 def btn_click():
     URL = URLInput.get()
-    print(URL)
+    #print(URL)
     pages = pagesInput.get()
     info_str = for_GUI(pages, URL)
     # info_str = f'Data: {str(URL)}'
@@ -25,7 +25,7 @@ root.resizable(width=False, height=False)
 canvas = Canvas(root, height=500, width=250)
 canvas.pack()
 
-frame = Frame(root, bg='blue')
+frame = Frame(root, bg='#a1f6ff')
 frame.place(relx=0.05, rely=0.05, relwidth=0.9, relheight=0.9)
 
 title = Label(root, text='Парсинг Auto ria', bg='white', font='Times 25')

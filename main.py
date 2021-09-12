@@ -52,9 +52,9 @@ def parse(pages=2, URL='https://auto.ria.com/uk/newauto/marka-mitsubishi/'):
     cars = []
     page_url = URL
     for page in range(1, pages + 1):
-        print(f'Парсинг страницы {page}')
         try:
             html = get_html(page_url)
+            print(f'Парсинг страницы {page}')
             if html.status_code == 200:
                 response = get_content(html.text, cars)
                 if response != None:
@@ -65,6 +65,7 @@ def parse(pages=2, URL='https://auto.ria.com/uk/newauto/marka-mitsubishi/'):
                 print('Error1')
         except:
             print('Error')
+            return cars
     return cars
 
 
@@ -86,8 +87,11 @@ def for_GUI(pages='5', URL='https://auto.ria.com/uk/newauto/marka-mitsubishi/'):
         site_pages = int(pages)
         cars = parse(site_pages, URL)
         response_message = f'Получено {len(cars)} автомобилей.'
-        write_file(cars, FILE)
-        os.startfile(FILE)
+        if response_message != 'Получено 0 автомобилей.':
+            write_file(cars, FILE)
+            os.startfile(FILE)
+        else:
+            response_message = 'Ошибка ввода.'
     else:
-        response_message = 'Invalid output'
+        response_message = 'Ошибка ввода.'
     return response_message
