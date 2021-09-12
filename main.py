@@ -1,7 +1,14 @@
 from bs4 import BeautifulSoup as BS
 import requests
 
-URL = 'https://auto.ria.com/uk/newauto/marka-mitsubishi/'
+while True:
+    URL = input('Введите ссылку:')
+    if URL == None:
+        print('Строка пустая')
+        continue
+    else:
+        break
+
 HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36'
            , 'accept': '*/*'}
 HOSTS = 'https://auto.ria.com/'
