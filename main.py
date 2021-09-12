@@ -7,6 +7,7 @@ while True:
         print('Строка пустая')
         continue
     else:
+        URL = URL.strip()
         break
 
 HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36'
@@ -18,15 +19,13 @@ def get_html(url, params=None):
     r = requests.get(url, headers=HEADERS, params=params)
     return r
 
-def get_content(html):
+def get_content(html, cars):
     soup = BS(html, 'html.parser')
     try:
         response = soup.find('link', rel='next').get('href')
     except:
         response = None
     items = soup.find_all('section', class_='proposition')
-
-    cars = []
 
     for item in items:
         cars.append({
@@ -39,17 +38,18 @@ def get_content(html):
     return response
 
 def parse(pages=2):
+    cars = []
     page_url = URL
     for page in range(1, pages + 1):
         print('Page:' + str(page))
         try:
             html = get_html(page_url)
             if html.status_code == 200:
-                response = get_content(html.text)
+                response = get_content(html.text, cars)
                 if response != None:
                     page_url = response
                 else:
-                    break
+                    return cars
             else:
                 print('Error1')
         except:
@@ -58,7 +58,8 @@ def parse(pages=2):
 pages = input('Введите количество строк: ')
 if pages.isdigit():
     pages = int(pages)
-    parse(pages)
+    cars = parse(pages)
+    print(f'Получено {len(cars)} автомобилей')
 else:
     print('Invalid number')
 input('Press Enter...')
