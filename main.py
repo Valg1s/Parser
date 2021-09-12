@@ -70,7 +70,7 @@ def parse(pages=2, URL='https://auto.ria.com/uk/newauto/marka-mitsubishi/'):
 
 
 def for_cmd():
-    pages = input('Введите количество строк: ')
+    pages = input('Введите колличество страниц: ')
     if pages.isdigit():
         pages = int(pages)
         cars = parse(pages)
