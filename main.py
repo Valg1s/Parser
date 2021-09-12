@@ -3,14 +3,14 @@ import requests
 import os
 import csv
 
-while True:
-    URL = input('Введите ссылку:')
-    if URL == None:
-        print('Строка пустая')
-        continue
-    else:
-        URL = URL.strip()
-        break
+# while True:
+#     URL = input('Введите ссылку:')
+#     if URL == None:
+#         print('Строка пустая')
+#         continue
+#     else:
+#         URL = URL.strip()
+#         break
 
 HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36'
            , 'accept': '*/*'}
@@ -37,7 +37,7 @@ def get_content(html, cars):
             'cost_UAH': item.find('span', class_='size16').get_text(),
             'region': item.find('span', class_='item region').get_text()
         })
-
+    # print(cars)
     return response
 
 def write_file(items, path):
@@ -48,7 +48,7 @@ def write_file(items, path):
             writer.writerow([item['title'], item['cost_dollar'], item['cost_UAH'], item['region']])
 
 
-def parse(pages=2):
+def parse(pages=2, URL='https://auto.ria.com/uk/newauto/marka-mitsubishi/'):
     cars = []
     page_url = URL
     for page in range(1, pages + 1):
@@ -65,14 +65,29 @@ def parse(pages=2):
                 print('Error1')
         except:
             print('Error')
+    return cars
 
-pages = input('Введите количество строк: ')
-if pages.isdigit():
-    pages = int(pages)
-    cars = parse(pages)
-    print(f'Получено {len(cars)} автомобилей')
-    write_file(cars, FILE)
-    os.startfile(FILE)
-else:
-    print('Invalid number')
-input('Press Enter...')
+
+def for_cmd():
+    pages = input('Введите количество строк: ')
+    if pages.isdigit():
+        pages = int(pages)
+        cars = parse(pages)
+        print(f'Получено {len(cars)} автомобилей')
+        write_file(cars, FILE)
+        os.startfile(FILE)
+    else:
+        print('Invalid number')
+    input('Press Enter...')
+
+
+def for_GUI(pages='5', URL='https://auto.ria.com/uk/newauto/marka-mitsubishi/'):
+    if pages.isdigit():
+        site_pages = int(pages)
+        cars = parse(site_pages, URL)
+        response_message = f'Получено {len(cars)} автомобилей.'
+        write_file(cars, FILE)
+        os.startfile(FILE)
+    else:
+        response_message = 'Invalid output'
+    return response_message
