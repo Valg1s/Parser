@@ -9,7 +9,7 @@ def btn_click():
     print(URL)
     # info_str = f'Data: {str(URL)}'
     # messagebox.showinfo(title='Name', message=info_str)
-    
+
 
 
 root['bg'] = '#fafafa'
@@ -32,5 +32,6 @@ btn.place(height=30, width=100, x=180, y=65)
 
 URLInput = Entry(frame, bg='white')
 URLInput.place(height=40, width=350, x=50, y=110)
+#Проверка слияния
 
 root.mainloop()
