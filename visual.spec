@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(['visual.py'],
-             pathex=['C:\\Users\\Максим\\Documents\\Parser (visual branch)'],
+             pathex=['C:\\Users\\Максим\\Documents\\Parser'],
              binaries=[],
              datas=[],
              hiddenimports=[],

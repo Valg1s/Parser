@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup as BS
+from database import add_parse_files, delete_db
 import requests
 import os
 import csv
@@ -82,14 +83,23 @@ def for_cmd():
     input('Press Enter...')
 
 
-def for_GUI(pages='5', URL='https://auto.ria.com/uk/newauto/marka-mitsubishi/'):
+def for_GUI(pages='5', URL='https://auto.ria.com/uk/newauto/marka-mitsubishi/', file_type= 'Excel'):
     if pages.isdigit():
         site_pages = int(pages)
         cars = parse(site_pages, URL)
         response_message = f'Получено {len(cars)} автомобилей.'
         if response_message != 'Получено 0 автомобилей.':
-            write_file(cars, FILE)
-            os.startfile(FILE)
+            if file_type == 'Excel':
+                write_file(cars, FILE)
+                os.startfile(FILE)
+            elif file_type == 'DB':
+                delete_db()
+                for i in range(len(cars)):
+                    title = cars[i]['title']
+                    cost_dollar = cars[i]['cost_dollar']
+                    cost_UAH = cars[i]['cost_UAH']
+                    region = cars[i]['region']
+                    add_parse_files(title, cost_dollar, cost_UAH, region)
         else:
             response_message = 'Ошибка ввода.'
     else:
